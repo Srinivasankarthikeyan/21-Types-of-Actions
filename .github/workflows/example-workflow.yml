@@ -1,0 +1,50 @@
+name: Docker Container Action Example
+
+on:
+  workflow_dispatch:
+    inputs:
+      user_name:
+        description: 'Name to greet'
+        required: true
+        default: 'Developer'
+      greeting_style:
+        description: 'Greeting style (formal, casual, excited)'
+        required: true
+        type: choice
+        options:
+          - formal
+          - casual
+          - excited
+
+jobs:
+  test-docker-action:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Using the Docker Container Action locally
+      - name: Run greeting action
+        id: greet
+        uses: ./.github/actions/docker-container-action
+        with:
+          name: ${{ github.event.inputs.user_name }}
+          greeting-style: ${{ github.event.inputs.greeting_style }}
+
+      # Display the output
+      - name: Show greeting
+        run: |
+          echo "Received message: ${{ steps.greet.outputs.greeting-message }}"
+          echo "✅ Docker action completed successfully!"
+
+      # Example: Use output in another step
+      - name: Log greeting to file
+        run: |
+          echo "${{ steps.greet.outputs.greeting-message }}" > greeting.txt
+          cat greeting.txt
+
+      - name: Upload greeting log
+        uses: actions/upload-artifact@v4
+        with:
+          name: greeting-log
+          path: greeting.txt

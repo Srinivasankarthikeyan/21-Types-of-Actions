@@ -1,0 +1,20 @@
+name: 'Docker Container Action - Greeting'
+description: 'A Docker container action that greets you with custom message'
+inputs:
+  name:
+    description: 'Name to greet'
+    required: true
+    default: 'World'
+  greeting-style:
+    description: 'Style of greeting (formal, casual, excited)'
+    required: false
+    default: 'casual'
+outputs:
+  greeting-message:
+    description: 'The generated greeting message'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.name }}
+    - ${{ inputs.greeting-style }}
