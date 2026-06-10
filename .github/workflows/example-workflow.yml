@@ -26,7 +26,7 @@ jobs:
       # Using the Docker Container Action locally
       - name: Run greeting action
         id: greet
-        uses: ./.github/actions/docker-container-action
+        uses: ./.github/actions
         with:
           name: ${{ github.event.inputs.user_name }}
           greeting-style: ${{ github.event.inputs.greeting_style }}
