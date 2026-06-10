@@ -30,4 +30,4 @@ echo "greeting-message=$MESSAGE" >> $GITHUB_OUTPUT
 # Example: simulate some work
 echo "Processing..."
 sleep 1
-echo "✅ Greeting action completed!"
+echo "✅ Greeting action completed! Inside Docker Container Action."
